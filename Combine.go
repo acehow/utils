@@ -3,8 +3,8 @@ package utils
 import (
 	"fmt"
 )
-func test() {
 
+func test() {
 	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
 	m := 3
 
@@ -35,6 +35,7 @@ func zuheResult(n int, m int) [][]int {
 		fmt.Println("Illegal argument. Param m must between 1 and len(nums).")
 		return [][]int{}
 	}
+
 	//保存最终结果的数组，总数直接通过数学公式计算
 	result := make([][]int, 0, MathZuhe(n, m))
 	//保存每一个组合的索引的数组，1表示选中，0表示未选中
