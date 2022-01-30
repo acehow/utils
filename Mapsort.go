@@ -1,30 +1,31 @@
 package utils
-
 import (
 	"constraints"
 	"fmt"
 	"sort"
 )
 
-type Item struct {
-	Key any
-	Val any
+type Item[T comparable, V constraints.Ordered] struct {
+	Key T
+	Val V
 }
-type MapSorter []Item
 
 func NewMapSorter[K comparable, V constraints.Ordered](m map[K]V) []K {
-
-	ms := make(MapSorter, 0, len(m))
+	//var ms []Item[K, V]
+	ms := make([]Item[K, V], 0, len(m))
 	for k, v := range m {
-		ms = append(ms, Item{k, v})
+		var t Item[K, V]
+		t.Key = k
+		t.Val = v
+		ms = append(ms, t)
 	}
 	// sort ms
 	sort.Slice(ms, func(i, j int) bool {
-		return ms[j+1].Val.(V) > ms[j].Val.(V)
+		return ms[j+1].Val > ms[j].Val
 	})
 	var ret []K
 	for _, v := range ms {
-		ret = append(ret, v.Key.(K))
+		ret = append(ret, v.Key)
 	}
 	return ret
 }
