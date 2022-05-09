@@ -127,6 +127,8 @@ func jieCheng(n int) int {
 	}
 	return result
 }
+
+// 排列结果
 func PailieResult(nums []int, m int) [][]int {
 	//组合结果
 	zuhe := ZuheResult(nums, m)

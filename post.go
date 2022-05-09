@@ -1,9 +1,20 @@
 package utils
+
+import (
+	"bytes"
+	"encoding/json"
+	"net/http"
+	"net/url"
+	"strings"
+)
+
+/*
 var client = http.Client{
 	Timeout: 10 * time.Second,
 }
+*/
 
-func HttpPostJson(url string, data interface{}, result interface{}, header map[string]string) error {
+func HttpPostJson(client *http.Client, url string, data interface{}, result interface{}, header map[string]string) error {
 	buf := bytes.NewBuffer(nil)
 	encoder := json.NewEncoder(buf)
 	if err := encoder.Encode(data); err != nil {
@@ -36,7 +47,7 @@ func HttpPostJson(url string, data interface{}, result interface{}, header map[s
 	return nil
 }
 
-func HttpPostForm(posturl string, data url.Values, result interface{}, host string) error {
+func HttpPostForm(client *http.Client, posturl string, data url.Values, result interface{}, host string) error {
 	request, err := http.NewRequest(http.MethodPost, posturl, strings.NewReader(data.Encode()))
 	if err != nil {
 		return err
@@ -59,7 +70,7 @@ func HttpPostForm(posturl string, data url.Values, result interface{}, host stri
 	return nil
 }
 
-func HttpGetRequest(url string, result interface{}) error {
+func HttpGetRequest(client *http.Client, url string, result interface{}) error {
 	resp, err := client.Get(url)
 	if err != nil {
 		return err
