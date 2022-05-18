@@ -20,6 +20,25 @@ func IsIn[T comparable](target T, array []T) bool {
 	return false
 }
 
+// get random element from slice
+func GetRandElem[T any](count int, data []T, isCopy bool) []T {
+	if len(data) < count {
+		return nil
+	}
+	nums := data
+	if isCopy {
+		nums = make([]T, len(data))
+		copy(nums, data)
+	}
+	
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	r.Shuffle(len(nums), func(i, j int) {
+		nums[i], nums[j] = nums[j], nums[i]
+	})
+
+	return nums[0:count]
+}
+
 // get distinct random numbers from [start,end)
 func GetRandomNumber(start int, end int, count int) []int {
 	if end < start || (end-start) < count {
