@@ -4,41 +4,21 @@ import (
 	"fmt"
 )
 
-func test() {
-	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}
-	m := 3
-
-	result:= ZuheResult(nums,m)
-	//结果是否正确
-	rightCount := MathZuhe(len(nums), m)
-	if rightCount == len(result) {
-		fmt.Println("结果正确")
-	} else {
-		fmt.Println("结果错误，正确结果是：", rightCount)
-	}
-	//result:=PailieResult(nums,3)
-
-	fmt.Println("count:", len(result))
-	fmt.Println("result:", result)
-}
-
-//获得组合数 从nums 取 m 个数, 返回二阶数组
+//get combine number from nums get m : C(m, nums)
 func ZuheResult(nums []int, m int) [][]int {
 	n := len(nums)
 	indexs := zuheResult(n, m)
 	return findNumsByIndexs(nums, indexs)
 }
 
-//组合算法(从nums中取出m个数)
 func zuheResult(n int, m int) [][]int {
 	if m < 1 || m > n {
 		fmt.Println("Illegal argument. Param m must between 1 and len(nums).")
 		return [][]int{}
 	}
 
-	//保存最终结果的数组，总数直接通过数学公式计算
 	result := make([][]int, 0, MathZuhe(n, m))
-	//保存每一个组合的索引的数组，1表示选中，0表示未选中
+	// 1 : seleced ,0 : not selected
 	indexs := make([]int, n)
 	for i := 0; i < n; i++ {
 		if i < m {
@@ -47,7 +27,7 @@ func zuheResult(n int, m int) [][]int {
 			indexs[i] = 0
 		}
 	}
-	//第一个结果
+	// first result
 	result = addTo(result, indexs)
 	for {
 		find := false
