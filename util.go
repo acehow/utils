@@ -27,7 +27,7 @@ func StrMod(num string, k int) (int,error) {
 	for m := 0; m < len(num); m++ {
 		number, err := strconv.Atoi(num[m : m+1])
 		if err!=nil {
-			return 0,err
+			return -1,err
 		}
 		left = (left*10 + number) % k
 	}
