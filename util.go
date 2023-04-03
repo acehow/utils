@@ -3,6 +3,7 @@ package utils
 import (
 	"math/rand"
 	"time"
+	"strconv"
 )
 
 // get pointer of object
@@ -18,6 +19,16 @@ func IsIn[T comparable](target T, array []T) bool {
 		}
 	}
 	return false
+}
+
+// get mod of num/k
+func StrMod(num string, k int) int {
+	left := 0
+	for m := 0; m < len(num); m++ {
+		number, _ := strconv.Atoi(num[m : m+1])
+		left = (left*10 + number) % k
+	}
+	return left
 }
 
 // get random element from slice
