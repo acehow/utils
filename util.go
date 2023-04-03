@@ -22,13 +22,16 @@ func IsIn[T comparable](target T, array []T) bool {
 }
 
 // get mod of num/k
-func StrMod(num string, k int) int {
+func StrMod(num string, k int) (int,error) {
 	left := 0
 	for m := 0; m < len(num); m++ {
-		number, _ := strconv.Atoi(num[m : m+1])
+		number, err := strconv.Atoi(num[m : m+1])
+		if err!=nil {
+			return 0,err
+		}
 		left = (left*10 + number) % k
 	}
-	return left
+	return left,nil
 }
 
 // get random element from slice
