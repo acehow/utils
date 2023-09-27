@@ -35,54 +35,43 @@ func StrMod(num string, k int) (int,error) {
 }
 
 // get num1*num2 as string
-func StrMul(num1 string, num2 string) string {
-	if num1 == "0" || num2 == "0" {
-		return "0"
+func StrMul(numA string, numB string) (string,error) {
+	ba, bb := big.NewInt(0), big.NewInt(0)
+	if _, ok := ba.SetString(numA, 10); !ok {
+		return "", errors.New("invalid numA")
+	}
+	if _, ok := bb.SetString(numB, 10); !ok {
+		return "", errors.New("invalid numB")
 	}
 
-	sumArr := make([]int, len(num1)+len(num2))
-
-	for i := len(num2) - 1; i >= 0; i-- {
-		n2 := int(num2[i] - '0')
-		for j := len(num1) - 1; j >= 0; j-- {
-			n1 := int(num1[j] - '0')
-			sum := n2*n1 + sumArr[i+j+1]
-			sumArr[i+j+1] = sum % 10
-			sumArr[i+j] += sum / 10
-		}
-	}
-
-	res := ""
-	for k, v := range sumArr {
-		if k == 0 && v == 0 {
-			continue
-		}
-		res += string(v + '0')
-	}
-	return res
+	mul := big.NewInt(0).Mul(ba,bb)
+	return mul.String(),nil
 }
 
-func StrAdd(str1,str2 string) string {
-	str2Count := len(str2)
-	str1Count := len(str1)
-	add:=0
-	ans:=""
-	for(str1Count>0 || str2Count>0) {
-		x:=0
-		if str1Count>0 {
-			x=int(str1[str1Count-1]-'0')
-		}
-		y:=0
-		if str2Count>0 {
-			y=int(str2[str2Count-1]-'0')
-		}
-		result:= x+y+add
-		ans+=strconv.Itoa(result%10)
-		add=result/10
-		str1Count--
-		str2Count--
+func StrAdd(numA string, numB string) (string,error) {
+	ba, bb := big.NewInt(0), big.NewInt(0)
+	if _, ok := ba.SetString(numA, 10); !ok {
+		return "", errors.New("invalid numA")
 	}
-	return StrReverse(ans)
+	if _, ok := bb.SetString(numB, 10); !ok {
+		return "", errors.New("invalid numB")
+	}
+
+	mul := big.NewInt(0).Add(ba,bb)
+	return mul.String(),nil
+}
+
+func StrSub(numA string, numB string) (string,error) {
+	ba, bb := big.NewInt(0), big.NewInt(0)
+	if _, ok := ba.SetString(numA, 10); !ok {
+		return "", errors.New("invalid numA")
+	}
+	if _, ok := bb.SetString(numB, 10); !ok {
+		return "", errors.New("invalid numB")
+	}
+
+	mul := big.NewInt(0).Sub(ba,bb)
+	return mul.String(),nil
 }
 
 func StrReverse(s string) string {
