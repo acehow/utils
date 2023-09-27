@@ -62,6 +62,37 @@ func StrMul(num1 string, num2 string) string {
 	return res
 }
 
+func StrAdd(str1,str2 string) string {
+	str2Count := len(str2)
+	str1Count := len(str1)
+	add:=0
+	ans:=""
+	for(str1Count>0 || str2Count>0) {
+		x:=0
+		if str1Count>0 {
+			x=int(str1[str1Count-1]-'0')
+		}
+		y:=0
+		if str2Count>0 {
+			y=int(str2[str2Count-1]-'0')
+		}
+		result:= x+y+add
+		ans+=strconv.Itoa(result%10)
+		add=result/10
+		str1Count--
+		str2Count--
+	}
+	return StrReverse(ans)
+}
+
+func StrReverse(s string) string {
+    rns := []rune(s) 
+    for i, j := 0, len(rns)-1; i < j; i, j = i+1, j-1 {
+        rns[i], rns[j] = rns[j], rns[i]
+    }
+    return string(rns)
+}
+
 // get random element from slice
 func GetRandElem[T any](count int, data []T, isCopy bool) []T {
 	if len(data) < count {
